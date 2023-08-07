@@ -15,9 +15,7 @@ class CourseView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
-          children: [
-            Text("Course"),
-          ],
+          children: [Text("data")],
         ),
       ),
     );

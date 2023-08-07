@@ -13,12 +13,12 @@ class CourseController extends GetxController {
 
   var isLoading = true.obs;
 
-  var allcourselist = <CoursesModel>[].obs;
+  var allcourselist = <Course>[].obs;
 
   void fetchAllusers() async {
     try {
       isLoading(true);
-      var allcourse = await UserApi.fetchAllusers();
+      var allcourse = await UserApi.fetchCourses();
       if (allcourse != null) {
         allcourselist.assignAll(allcourse);
       }

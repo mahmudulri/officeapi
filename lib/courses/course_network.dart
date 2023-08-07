@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:lmsapi/courses/courses_model.dart';
 
-import 'courses_model.dart';
+class UserApi {
+  static Future<List<Course>> fetchCourses() async {
+    final url = Uri.parse('https://stg-lms.zainikthemes.com/api/home/courses');
+    final response = await http.get(url);
 
-Future<List<Course>> fetchCourses() async {
-  final url = Uri.parse('https://stg-lms.zainikthemes.com/api/home/courses');
-  final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final coursesModel = CoursesModel.fromJson(json.decode(response.body));
 
-  if (response.statusCode == 200) {
-    final coursesModel = CoursesModel.fromJson(json.decode(response.body));
-    return coursesModel.data.courses;
-  } else {
-    throw Exception('Failed to fetch courses');
+      return coursesModel.data.courses;
+    } else {
+      throw Exception('Failed to fetch courses');
+    }
   }
 }
 
