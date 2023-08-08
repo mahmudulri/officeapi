@@ -3,14 +3,16 @@ import 'package:http/http.dart' as http;
 import 'package:lmsapi/courses/courses_model.dart';
 
 class UserApi {
-  static Future<List<Course>> fetchCourses() async {
+  static Future<CoursesModel> fetchCourses() async {
     final url = Uri.parse('https://stg-lms.zainikthemes.com/api/home/courses');
     final response = await http.get(url);
 
     if (response.statusCode == 200) {
       final coursesModel = CoursesModel.fromJson(json.decode(response.body));
 
-      return coursesModel.data.courses;
+      print(response.body.toString());
+
+      return coursesModel;
     } else {
       throw Exception('Failed to fetch courses');
     }

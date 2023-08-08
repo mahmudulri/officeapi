@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:lmsapi/courses/apione/apione.dart';
 import 'package:lmsapi/courses/course_view.dart';
 import 'package:lmsapi/homepage.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: CourseView(),
+      home: ApiOneView(),
     );
   }
 }
