@@ -9,8 +9,9 @@ class UserApi {
 
     if (response.statusCode == 200) {
       final coursesModel = CoursesModel.fromJson(json.decode(response.body));
+      print(coursesModel);
 
-      print(response.body.toString());
+      // print(response.body.toString());
 
       return coursesModel;
     } else {

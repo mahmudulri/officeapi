@@ -1,28 +1,26 @@
 import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
-import 'course_network.dart';
-import 'courses_model.dart'; // Import the Course model
+import 'package:lmsapi/bundle/bundlenetwork.dart';
+import 'bundlemodel.dart';
 
-class CourseController extends GetxController {
+class BundleController extends GetxController {
   @override
   void onInit() {
-    fetchAllusers();
+    fetchAllbundles();
     super.onInit();
   }
 
   var isLoading = true.obs;
 
-  // var allcourselist = <Course>[].obs;
+  var allbundles = BundleModel().obs;
 
-  var allcourses = CoursesModel().obs;
-
-  void fetchAllusers() async {
+  void fetchAllbundles() async {
     try {
       isLoading(true);
-      var allcourse = await UserApi.fetchCourses().then((value) {
-        allcourses.value = value;
-        // print(allcourses);
+      var mybundles = await BundleApi.fetchbundle().then((value) {
+        allbundles.value = value;
+        print(allbundles);
       });
 
       isLoading(false);
