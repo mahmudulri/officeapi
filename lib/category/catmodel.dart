@@ -80,7 +80,7 @@ class Category {
   final String imageUrl;
   final String isFeature;
   final String slug;
-  final List<Course> courses;
+  final List<Course>? courses;
 
   Category({
     required this.uuid,
@@ -88,7 +88,7 @@ class Category {
     required this.imageUrl,
     required this.isFeature,
     required this.slug,
-    required this.courses,
+    this.courses,
   });
 
   Category copyWith({
@@ -114,8 +114,12 @@ class Category {
         imageUrl: json["image_url"],
         isFeature: json["is_feature"],
         slug: json["slug"],
-        courses:
-            List<Course>.from(json["courses"].map((x) => Course.fromJson(x))),
+        // courses: json["courses"] != null
+        //     ? List<Course>.from(json["courses"].map((x) => Course.fromJson(x)))
+        //     : null,
+        courses: json.containsKey("courses")
+            ? List<Course>.from(json["courses"].map((x) => Course.fromJson(x)))
+            : [],
       );
 
   Map<String, dynamic> toJson() => {
@@ -124,7 +128,9 @@ class Category {
         "image_url": imageUrl,
         "is_feature": isFeature,
         "slug": slug,
-        "courses": List<dynamic>.from(courses.map((x) => x.toJson())),
+        "courses": courses!.isEmpty
+            ? "courses"
+            : List<dynamic>.from(courses!.map((x) => x.toJson())),
       };
 }
 
@@ -205,7 +211,7 @@ class Course {
         createdAt: DateTime.parse(json["created_at"]),
         imageUrl: json["image_url"],
         learnerAccessibility: json["learner_accessibility"],
-        totalReview: json["total_review"],
+        totalReview: json == null ? "no data" : json["total_review"],
         author: json["author"],
         authorUserId: json["author_user_id"],
         authorAwards: json["author_awards"],

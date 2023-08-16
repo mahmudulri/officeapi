@@ -14,16 +14,33 @@ class CategoryView extends StatelessWidget {
       appBar: AppBar(
         title: Text("category view"),
       ),
-      body: Obx(() => catController.isLoading.value == false
-          ? ListView.builder(
-              itemCount: catController.allcatlist.value.data!.categories.length,
-              itemBuilder: (context, index) {
-                return Text(catController.allcatlist.value.data!
-                    .categories[index].courses[index].title
-                    .toString());
-              },
-            )
-          : CircularProgressIndicator()),
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Obx(() => catController.isLoading.value == false
+            ? ListView.builder(
+                itemCount:
+                    catController.allcatlist.value.data!.categories.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    height: 400,
+                    width: double.infinity,
+                    color: Colors.green,
+                    child: ListView.builder(
+                      itemCount: catController.allcatlist.value.data!
+                          .categories[index].courses!.length,
+                      itemBuilder: (context, index) {
+                        return Text(
+                          catController.allcatlist.value.data!.categories[index]
+                              .courses![index].title
+                              .toString(),
+                        );
+                      },
+                    ),
+                  );
+                },
+              )
+            : CircularProgressIndicator()),
+      ),
     );
   }
 }
