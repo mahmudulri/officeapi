@@ -21,9 +21,26 @@ class BundleView extends StatelessWidget {
               ? ListView.builder(
                   itemCount: bundleController.allbundles.value.data!.length,
                   itemBuilder: (context, index) {
-                    return Text(
-                      bundleController.allbundles.value.data![index].uuid
-                          .toString(),
+                    return Column(
+                      children: [
+                        Text(
+                          bundleController.allbundles.value.data![index].uuid
+                              .toString(),
+                        ),
+                        bundleController
+                                    .allbundles.value.data![index].instructor ==
+                                null
+                            ? Text(
+                                bundleController.allbundles.value.data![index]
+                                    .organization!.firstName
+                                    .toString(),
+                              )
+                            : Text(
+                                bundleController.allbundles.value.data![index]
+                                    .instructor!.firstName
+                                    .toString(),
+                              ),
+                      ],
                     );
                   },
                 )

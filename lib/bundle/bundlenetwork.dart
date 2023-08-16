@@ -14,8 +14,6 @@ class BundleApi {
 
       final bundleModel = BundleModel.fromJson(json.decode(response.body));
 
-      print(bundleModel);
-
       return bundleModel;
     } else {
       throw Exception('Failed to fetch courses');

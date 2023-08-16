@@ -65,8 +65,8 @@ class Datum {
   final DateTime updatedAt;
   final int bundleCoursesCount;
   final String imageUrl;
-  final Instructor instructor;
-  final Instructor organization;
+  final Instructor? instructor;
+  final Organization? organization;
 
   Datum({
     required this.id,
@@ -88,8 +88,8 @@ class Datum {
     required this.updatedAt,
     required this.bundleCoursesCount,
     required this.imageUrl,
-    required this.instructor,
-    required this.organization,
+    this.instructor,
+    this.organization,
   });
 
   Datum copyWith({
@@ -113,7 +113,7 @@ class Datum {
     int? bundleCoursesCount,
     String? imageUrl,
     Instructor? instructor,
-    Instructor? organization,
+    Organization? organization,
   }) =>
       Datum(
         id: id ?? this.id,
@@ -159,8 +159,12 @@ class Datum {
         updatedAt: DateTime.parse(json["updated_at"]),
         bundleCoursesCount: json["bundle_courses_count"],
         imageUrl: json["image_url"],
-        instructor: Instructor.fromJson(json["instructor"]),
-        organization: Instructor.fromJson(json["organization"]),
+        instructor: json["instructor"] == null
+            ? null
+            : Instructor.fromJson(json["instructor"]),
+        organization: json["organization"] == null
+            ? null
+            : Organization.fromJson(json["organization"]),
       );
 
   Map<String, dynamic> toJson() => {
@@ -183,30 +187,22 @@ class Datum {
         "updated_at": updatedAt.toIso8601String(),
         "bundle_courses_count": bundleCoursesCount,
         "image_url": imageUrl,
-        "instructor": instructor.toJson(),
-        "organization": organization.toJson(),
+        "instructor": instructor,
+        "organization": organization,
       };
 }
 
 class Instructor {
   final String uuid;
-  final String firstName;
+  String? firstName;
   final String lastName;
   final String professionalTitle;
-  final int hourlyRate;
-  final int consultationAvailable;
-  final int laravelThroughKey;
-  final String cvFileUrl;
 
   Instructor({
     required this.uuid,
-    required this.firstName,
+    this.firstName,
     required this.lastName,
     required this.professionalTitle,
-    required this.hourlyRate,
-    required this.consultationAvailable,
-    required this.laravelThroughKey,
-    required this.cvFileUrl,
   });
 
   Instructor copyWith({
@@ -214,21 +210,12 @@ class Instructor {
     String? firstName,
     String? lastName,
     String? professionalTitle,
-    int? hourlyRate,
-    int? consultationAvailable,
-    int? laravelThroughKey,
-    String? cvFileUrl,
   }) =>
       Instructor(
         uuid: uuid ?? this.uuid,
         firstName: firstName ?? this.firstName,
         lastName: lastName ?? this.lastName,
         professionalTitle: professionalTitle ?? this.professionalTitle,
-        hourlyRate: hourlyRate ?? this.hourlyRate,
-        consultationAvailable:
-            consultationAvailable ?? this.consultationAvailable,
-        laravelThroughKey: laravelThroughKey ?? this.laravelThroughKey,
-        cvFileUrl: cvFileUrl ?? this.cvFileUrl,
       );
 
   factory Instructor.fromJson(Map<String, dynamic> json) => Instructor(
@@ -236,10 +223,6 @@ class Instructor {
         firstName: json["first_name"],
         lastName: json["last_name"],
         professionalTitle: json["professional_title"],
-        hourlyRate: json["hourly_rate"],
-        consultationAvailable: json["consultation_available"],
-        laravelThroughKey: json["laravel_through_key"],
-        cvFileUrl: json["cv_file_url"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -247,9 +230,46 @@ class Instructor {
         "first_name": firstName,
         "last_name": lastName,
         "professional_title": professionalTitle,
-        "hourly_rate": hourlyRate,
-        "consultation_available": consultationAvailable,
-        "laravel_through_key": laravelThroughKey,
-        "cv_file_url": cvFileUrl,
+      };
+}
+
+class Organization {
+  final String uuid;
+  final String firstName;
+  final String lastName;
+  final String professionalTitle;
+
+  Organization({
+    required this.uuid,
+    required this.firstName,
+    required this.lastName,
+    required this.professionalTitle,
+  });
+
+  Organization copyWith({
+    String? uuid,
+    String? firstName,
+    String? lastName,
+    String? professionalTitle,
+  }) =>
+      Organization(
+        uuid: uuid ?? this.uuid,
+        firstName: firstName ?? this.firstName,
+        lastName: lastName ?? this.lastName,
+        professionalTitle: professionalTitle ?? this.professionalTitle,
+      );
+
+  factory Organization.fromJson(Map<String, dynamic> json) => Organization(
+        uuid: json["uuid"],
+        firstName: json["first_name"],
+        lastName: json["last_name"],
+        professionalTitle: json["professional_title"],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "uuid": uuid,
+        "first_name": firstName,
+        "last_name": lastName,
+        "professional_title": professionalTitle,
       };
 }
